@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import GoogleMap from '~/components/GoogleMap.vue'
+import LeafletMap from '~/components/LeafletMap.vue'
 
 export default {
-  components: { GoogleMap },
+  components: { LeafletMap },
   created(){
     this.$axios.get('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
     .then(response => {
