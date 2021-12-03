@@ -1,52 +1,55 @@
 
 <template>
-  <div ref="leaflet"></div>
+<div ref="leaflet">
+<no-ssr>
+    <l-map :zoom="zoom" :center="center">
+        <l-tile-layer :url="url"/>
+        <l-marker :lat-lng="marker"/>
+        <l-icon-default :image-path="path"/>
+    </l-map>
+</no-ssr>
+
+</div>
+
 </template>
 
 <script>
-import { Loader } from "@googlemaps/js-api-loader"
+let Vue2Leaflet = {}
+    if (process.client)
+        Vue2Leaflet = require('vue2-leaflet')
+import 'leaflet/dist/leaflet.css';
 export default {
-    props: ['center', 'zoom', 'geoJson', 'mapStyle'],
-    mounted(){
-        const loader = new Loader({
-            apiKey: this.$config.googleApiKey,
-            version: "weekly"
-        });
-
-        loader.load().then(() => {
-            this.map = new google.maps.Map(this.$refs['map'], {
-                center: this.center,
-                zoom: this.zoom,
-            });
-            this.map.data.addGeoJson(this.geoJson);
-            this.map.data.setStyle(this.mapStyle);
-        });
-    },
-    data(){
-        return {
-            map: null
-        }
-    },
-    watch: {
-        center(newCenter){
-            this.map.panTo(newCenter);
-        },
-        zoom(newZoom){
-            this.map.setZoom(newZoom);
-        },
-        geoJson(geoJson){
-            this.map.data.addGeoJson(geoJson);
-        },
-        mapStyle(mapStyle){
-            console.log('setStyle');
-            this.map.data.setStyle(mapStyle);
-        }
-    }
+ components: {
+          'l-map': Vue2Leaflet.LMap,
+          'l-tile-layer': Vue2Leaflet.LTileLayer,
+          'l-marker': Vue2Leaflet.LMarker
+ },
+ data () {
+   return {
+     zoom: 14,
+                path: '/images/',
+                center: [47.413220, -1.219482],
+                url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                marker: (process.client)?L.latLng(47.413220, -1.219482):null,
+   }
+ },
+ methods: {
+   zoomUpdated (zoom) {
+     this.zoom = zoom;
+     console.log(this.markers)
+   },
+   centerUpdated (center) {
+     this.center = center;
+   }
+ }
 }
 </script>
 
-<style scoped>
-    div {
-        height: 800px;
-    }
+<style>
+ .map {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   overflow :hidden
+ }
 </style>
