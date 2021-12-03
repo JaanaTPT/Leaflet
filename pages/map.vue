@@ -3,8 +3,6 @@
   <v-btn @click="center={lat: 59.4268549, lng:24.7433906}; zoom=19">go to somewhere</v-btn>
   <v-btn @click="styleProperty='deaths'">Deaths</v-btn>
   <v-btn @click="styleProperty='confirmed'">Confirmed</v-btn>
-  <!-- see on google mapsi komponent, peame kirjutama Leafletile komponendi, mis võimaldab samu asju teha
-  vöikesed erinevused on, aga suures osas samad. peaks olema võimalik mõlemad tööle saada samade andmete põhjal -->
   <google-map :center="center" :zoom="zoom" :geoJson="covidGeoJson" :mapStyle="style" :key="styleProperty"></google-map>
 </div>
 </template>

@@ -21,6 +21,7 @@ export default {
             this.map.data.setStyle(this.mapStyle);
         });
     },
+
     data(){
         return {
             map: null
