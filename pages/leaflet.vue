@@ -1,5 +1,5 @@
 <template>
- <div id="app">
+ <div>
    <LeafletMap/>
  </div>
 
@@ -9,7 +9,6 @@
 import LeafletMap from '~/components/LeafletMap.vue'
 
 export default {
-  name: 'App',
   components: { LeafletMap },
 }
 </script>
